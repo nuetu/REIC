@@ -16,50 +16,50 @@ function main() {
   let dp = document.getElementById("dp_values").value.split(",");
 
   for (let i = 0; i < dp.length; i++) {
-    //each iteration = 1 row
     let percent = dp[i] / 100;
 
     //values stored in object
-    let values = {
+    let mortgage = {
       downpayment_value: Math.round(percent * property_value),
     };
-    values.mortgage_value = Math.round(
-      property_value - values.downpayment_value
+    mortgage.mortgage_value = Math.round(
+      property_value - mortgage.downpayment_value
     );
-    values.yearly_splits = Math.round(values.mortgage_value / mortgage_years);
-    values.monthly_splits = Math.round(values.yearly_splits / 12);
-    values.monthly_interest = Math.round(
-      (interest_rate / 100) * values.monthly_splits
+    mortgage.yearly_splits = Math.round(
+      mortgage.mortgage_value / mortgage_years
+    );
+    mortgage.monthly_splits = Math.round(mortgage.yearly_splits / 12);
+    mortgage.monthly_interest = Math.round(
+      (interest_rate / 100) * mortgage.monthly_splits
     );
     if (dp[i] < 20) {
-      values.pmi = Math.round(((pmi_rate / 100) * values.mortgage_value) / 12);
+      mortgage.pmi = Math.round(
+        ((pmi_rate / 100) * mortgage.mortgage_value) / 12
+      );
     } else {
-      values.pmi = 0;
+      mortgage.pmi = 0;
     }
-    values.mortgage_total =
-      values.monthly_splits + values.monthly_interest + values.pmi;
+    mortgage.mortgage_total =
+      mortgage.monthly_splits + mortgage.monthly_interest + mortgage.pmi;
 
     //construct row's columns
     let table_row = "<tr><td>" + dp[i] + "%</td>";
-    table_row +=
-      "<td>$" + values.downpayment_value.toLocaleString("en-US") + "</td>";
-    table_row +=
-      "<td>$" + values.mortgage_value.toLocaleString("en-US") + "</td>";
-    table_row +=
-      "<td>$" + values.yearly_splits.toLocaleString("en-US") + "</td>";
-    table_row +=
-      "<td>$" + values.monthly_splits.toLocaleString("en-US") + "</td>";
-    table_row +=
-      "<td>$" + values.monthly_interest.toLocaleString("en-US") + "</td>";
-    table_row += "<td>$" + values.pmi.toLocaleString("en-US") + "</td>";
-    table_row +=
-      "<td>$" + values.mortgage_total.toLocaleString("en-US") + "</td></tr>";
+    for (property in mortgage) {
+      table_row +=
+        "<td>$" + mortgage[property].toLocaleString("en-US") + "</td>";
+    }
+    table_row += "</tr>";
     table.innerHTML += table_row;
 
     //values for cost table
+    let values = {
+      mortgage_total: mortgage.mortgage_total,
+    };
     values.yearly_mortgage_total = values.mortgage_total * 12;
-    values.yearly_hoa_fees = parseInt(hoa_fees) * 12;
+    values.property_tax = property_tax;
+    values.utility_cost = utility_cost;
     values.yearly_utility_cost = utility_cost * 12;
+    values.yearly_hoa_fees = parseInt(hoa_fees) * 12;
     values.yearly_total_cost =
       values.yearly_mortgage_total +
       parseInt(property_tax) +
@@ -71,22 +71,11 @@ function main() {
 
     //construct cost Table row's columns
     let cost_table_row = "<tr><td>" + dp[i] + "%</td>";
-    cost_table_row +=
-      "<td>$" + values.mortgage_total.toLocaleString("en-US") + "</td>";
-    cost_table_row +=
-      "<td>$" + values.yearly_mortgage_total.toLocaleString("en-US") + "</td>";
-    cost_table_row += "<td>$" + property_tax.toLocaleString("en-US") + "</td>";
-    cost_table_row += "<td>$" + utility_cost.toLocaleString("en-US") + "</td>";
-    cost_table_row +=
-      "<td>$" + values.yearly_utility_cost.toLocaleString("en-US") + "</td>";
-    cost_table_row +=
-      "<td>$" + values.yearly_hoa_fees.toLocaleString("en-US") + "</td>";
-    cost_table_row +=
-      "<td>$" + values.yearly_total_cost.toLocaleString("en-US") + "</td>";
-    cost_table_row +=
-      "<td>$" +
-      values.monthly_total_cost.toLocaleString("en-US") +
-      "</td></tr>";
+    for (property in values) {
+      cost_table_row +=
+        "<td>$" + values[property].toLocaleString("en-US") + "</td>";
+    }
+    cost_table_row += "</tr>";
     cost_table.innerHTML += cost_table_row;
   }
 }
