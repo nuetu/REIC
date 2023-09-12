@@ -13,6 +13,7 @@ function main() {
   let utility_cost = calcUtil();
   let interest_rate = document.getElementById("interest_rate").value;
   let pmi_rate = document.getElementById("pmi_rate").value;
+  let rental_value = document.getElementById("rental_value").value;
   let dp = document.getElementById("dp_values").value.split(",");
 
   for (let i = 0; i < dp.length; i++) {
@@ -60,10 +61,15 @@ function main() {
     values.utility_cost = utility_cost;
     values.yearly_utility_cost = utility_cost * 12;
     values.yearly_hoa_fees = parseInt(hoa_fees) * 12;
+    values.rental_value = parseInt(rental_value);
+    if (!showRental()) {
+      values.rental_value = 0;
+    }
     values.yearly_total_cost =
       values.yearly_mortgage_total +
       parseInt(property_tax) +
       values.yearly_utility_cost +
+      values.rental_value +
       values.yearly_hoa_fees;
     values.monthly_total_cost = Math.round(
       parseInt(values.yearly_total_cost) / 12
@@ -81,13 +87,13 @@ function main() {
 }
 
 var utilities = {
-  gas: 0,
-  electricity: 0,
-  water: 0,
-  sewer: 0,
-  trash: 0,
-  internet: 0,
-  hoi: 0,
+  gas: 65,
+  electricity: 115,
+  water: 75,
+  sewer: 150,
+  trash: 40,
+  internet: 50,
+  hoi: 125,
 };
 var options = document.getElementById("options");
 
@@ -139,8 +145,10 @@ function showRental() {
   let input = document.getElementById("add_rental");
   if (input.checked) {
     document.getElementById("rental_options").style.display = "block";
+    return true;
   } else {
     document.getElementById("rental_options").style.display = "none";
+    return false;
   }
 }
 
