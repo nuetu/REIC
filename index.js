@@ -68,7 +68,7 @@ function main() {
     values.yearly_total_cost =
       values.yearly_mortgage_total +
       parseInt(property_tax) +
-      values.yearly_utility_cost +
+      values.yearly_utility_cost -
       values.rental_value +
       values.yearly_hoa_fees;
     values.monthly_total_cost = Math.round(
