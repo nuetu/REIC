@@ -69,7 +69,7 @@ function main() {
       values.yearly_mortgage_total +
       parseInt(property_tax) +
       values.yearly_utility_cost -
-      values.rental_value +
+      values.rental_value * 12 +
       values.yearly_hoa_fees;
     values.monthly_total_cost = Math.round(
       parseInt(values.yearly_total_cost) / 12
