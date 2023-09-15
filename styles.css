@@ -1,0 +1,266 @@
+body {
+  background-color: rgb(242, 242, 247);
+  margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
+}
+#top {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  padding: 2vw;
+  padding-bottom: 3vw;
+  position: sticky;
+  top: 0;
+  background-color: rgb(242, 242, 247);
+}
+#title {
+  font-size: 5vw;
+}
+#submit {
+  margin-left: 5vw;
+  border: 2px solid lightblue;
+  background-color: white;
+  border-radius: 5px;
+  font-size: 4vw;
+}
+#submit:hover {
+  background-color: rgb(242, 242, 247);
+  border: 2px solid rgb(36, 103, 125);
+  cursor: pointer;
+}
+#submit,
+#credit {
+  flex-grow: 1;
+  flex-basis: 0;
+}
+#credit,
+a {
+  text-decoration: none;
+  font-size: 3vw;
+  font-weight: bold;
+  color: coral;
+  margin-right: 5vw;
+}
+table {
+  background-color: white;
+  width: 90vw;
+  margin-bottom: 2em;
+  border-collapse: collapse;
+}
+table > tbody:nth-child(even) > tr {
+  background-color: rgb(240, 251, 255);
+}
+td,
+th {
+  padding: 0.6em;
+  display: none;
+}
+#table > tbody > tr > td:nth-child(-n + 1),
+#table > tbody > tr > td:nth-child(-10n + 8),
+#table > tbody > tr > th:nth-child(-n + 1),
+#table > tbody > tr > th:nth-child(-10n + 8) {
+  display: table-cell;
+}
+#cost_table > tbody > tr > td:nth-child(-n + 1),
+#cost_table > tbody > tr > td:nth-child(-10n + 9),
+#cost_table > tbody > tr > th:nth-child(-n + 1),
+#cost_table > tbody > tr > th:nth-child(-10n + 9) {
+  display: table-cell;
+}
+#tables {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.mortgage_option,
+.main_factor,
+#rental_options {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+.factor_option,
+.utility_option {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+.main_factor,
+.mortgage_option,
+.factor_option,
+#options,
+#utility_table,
+#rental_options,
+#dp_options {
+  padding: 2vw;
+  width: 90vw;
+}
+#factor_options,
+#mortgage_options,
+#main_factors,
+#utility_options,
+#rental_options,
+#dp_options {
+  border-radius: 2.5vw;
+  margin-bottom: 1em;
+  background: rgb(255, 255, 255);
+}
+label,
+input {
+  font-size: 4vw;
+  border-radius: 1vw;
+}
+main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-evenly;
+}
+#utility_options,
+#rental_options,
+#dp_options {
+  display: none;
+}
+.mmt {
+  background: lightblue;
+}
+.dp {
+  background-color: coral;
+}
+input[type="number"] {
+  width: 33%;
+}
+#options {
+  display: grid;
+  grid-template-columns: auto auto;
+}
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+#utility_table {
+  display: grid;
+  grid-template-columns: auto auto;
+}
+#utility_table > div:nth-child(odd) {
+  text-align: right;
+  padding-right: 1vw;
+  border-right: 1px solid black;
+  border-bottom: 1px solid rgb(242, 242, 247);
+}
+#utility_table > div:nth-child(even) {
+  text-align: center;
+
+  border-left: 1px solid black;
+  border-bottom: 1px solid rgb(242, 242, 247);
+}
+#utility_table > div:nth-child(-n + 2) {
+  text-align: center;
+  border-bottom: 1px solid black;
+}
+#utility_options {
+  flex-direction: column;
+}
+@media (min-width: 768px) {
+  #top {
+    padding: 1vw;
+  }
+  #title {
+    font-size: 3vw;
+  }
+  #submit {
+    font-size: 3vw;
+    margin-left: 15vw;
+  }
+  #credit {
+    margin-right: 15vw;
+  }
+  a {
+    font-size: 2vw;
+  }
+  main {
+    display: grid;
+    grid-template-columns: auto auto auto;
+  }
+  input[type="number"] {
+    width: 40%;
+  }
+  .main_factor,
+  .mortgage_option,
+  .factor_option,
+  #options,
+  #utility_table,
+  #rental_options,
+  #dp_options {
+    padding: 1em;
+    min-width: 25vw;
+    max-width: 30vw;
+  }
+  #mortgage_options,
+  #main_factors,
+  #utility_options,
+  #rental_options,
+  #dp_options {
+    border-radius: 5px;
+    margin-bottom: 1em;
+    background: rgb(255, 255, 255);
+    align-self: stretch;
+  }
+  label,
+  input {
+    border-radius: 5px;
+    font-size: initial;
+  }
+  #utility_options {
+    order: 5;
+    grid-row: 2 / 4;
+    grid-column: 4 / 2;
+    flex-direction: row;
+    align-items: start;
+  }
+  #rental_options {
+    order: 4;
+    grid-column: 1;
+  }
+  #dp_options {
+    flex-direction: column;
+    align-items: center;
+    order: 4;
+    grid-column: 1;
+  }
+  #dp_values {
+    margin-top: 1em;
+  }
+  #factor_options {
+    border-radius: 5px;
+    margin-bottom: 1em;
+    background: rgb(255, 255, 255);
+    align-self: stretch;
+    order: 3;
+  }
+  .utility_option {
+    padding: 0.4em;
+  }
+  #tables {
+    background-color: white;
+    width: initial;
+    margin-left: 2em;
+    margin-right: 2em;
+    overflow: initial;
+    display: flex;
+    flex-direction: column;
+    align-items: initial;
+    padding: 1em;
+    border-radius: 5px;
+  }
+  table {
+    width: initial;
+  }
+  th,
+  td {
+    display: table-cell;
+  }
+}

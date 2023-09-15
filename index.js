@@ -5,82 +5,98 @@ function main() {
     table.removeChild(table.lastChild);
     cost_table.removeChild(cost_table.lastChild);
   }
-  let property_value = document.getElementById("property_value").value;
-  let mortgage_years = document.getElementById("mortgage_years").value;
-  document.getElementById("year").innerHTML = mortgage_years + " Year Splits";
-  let property_tax = document.getElementById("property_tax").value;
-  let hoa_fees = document.getElementById("hoa_fees").value;
-  let utility_cost = calcUtil();
-  let interest_rate = document.getElementById("interest_rate").value;
-  let pmi_rate = document.getElementById("pmi_rate").value;
-  let rental_value = document.getElementById("rental_value").value;
+  data = {
+    property_value: document.getElementById("property_value").value,
+    mortgage_years: document.getElementById("mortgage_years").value,
+    property_tax: parseInt(document.getElementById("property_tax").value),
+    hoa_fees: parseInt(document.getElementById("hoa_fees").value),
+    utility_cost: calcUtil(),
+    interest_rate: document.getElementById("interest_rate").value,
+    pmi_rate: document.getElementById("pmi_rate").value,
+    rental_value: parseInt(document.getElementById("rental_value").value),
+  };
+
+  //Change table header for mortgage years.
+  document.getElementById("year").innerHTML =
+    data.mortgage_years + " Year Splits";
+
+  //create array of down-payment options
   let dp = document.getElementById("dp_values").value.split(",");
 
+  //Each iteration is a down-payment option
   for (let i = 0; i < dp.length; i++) {
     let percent = dp[i] / 100;
 
     //values stored in object
-    let mortgage = {
-      downpayment_value: Math.round(percent * property_value),
-    };
-    mortgage.mortgage_value = Math.round(
-      property_value - mortgage.downpayment_value
+    data.downpayment_value = Math.round(percent * data.property_value);
+    data.mortgage_value = Math.round(
+      data.property_value - data.downpayment_value
     );
-    mortgage.yearly_splits = Math.round(
-      mortgage.mortgage_value / mortgage_years
-    );
-    mortgage.monthly_splits = Math.round(mortgage.yearly_splits / 12);
-    mortgage.monthly_interest = Math.round(
-      (interest_rate / 100) * mortgage.monthly_splits
+    data.yearly_splits = Math.round(data.mortgage_value / data.mortgage_years);
+    data.monthly_splits = Math.round(data.yearly_splits / 12);
+    data.monthly_interest = Math.round(
+      (data.interest_rate / 100) * data.monthly_splits
     );
     if (dp[i] < 20) {
-      mortgage.pmi = Math.round(
-        ((pmi_rate / 100) * mortgage.mortgage_value) / 12
-      );
+      data.pmi = Math.round(((data.pmi_rate / 100) * data.mortgage_value) / 12);
     } else {
-      mortgage.pmi = 0;
+      data.pmi = 0;
     }
-    mortgage.mortgage_total =
-      mortgage.monthly_splits + mortgage.monthly_interest + mortgage.pmi;
+    data.mortgage_total =
+      data.monthly_splits + data.monthly_interest + data.pmi;
 
     //construct row's columns
     let table_row = "<tr><td>" + dp[i] + "%</td>";
-    for (property in mortgage) {
-      table_row +=
-        "<td>$" + mortgage[property].toLocaleString("en-US") + "</td>";
-    }
+    table_row +=
+      "<td>$" + data.downpayment_value.toLocaleString("en-US") + "</td>";
+    table_row +=
+      "<td>$" + data.mortgage_value.toLocaleString("en-US") + "</td>";
+    table_row += "<td>$" + data.yearly_splits.toLocaleString("en-US") + "</td>";
+    table_row +=
+      "<td>$" + data.monthly_splits.toLocaleString("en-US") + "</td>";
+    table_row +=
+      "<td>$" + data.monthly_interest.toLocaleString("en-US") + "</td>";
+    table_row += "<td>$" + data.pmi.toLocaleString("en-US") + "</td>";
+    table_row +=
+      "<td>$" + data.mortgage_total.toLocaleString("en-US") + "</td>";
     table_row += "</tr>";
     table.innerHTML += table_row;
 
     //values for cost table
-    let values = {
-      mortgage_total: mortgage.mortgage_total,
-    };
-    values.yearly_mortgage_total = values.mortgage_total * 12;
-    values.property_tax = property_tax;
-    values.utility_cost = utility_cost;
-    values.yearly_utility_cost = utility_cost * 12;
-    values.yearly_hoa_fees = parseInt(hoa_fees) * 12;
-    values.rental_value = parseInt(rental_value);
+    data.yearly_mortgage_total = data.mortgage_total * 12;
+    data.yearly_utility_cost = data.utility_cost * 12;
+    data.yearly_hoa_fees = data.hoa_fees * 12;
     if (!showRental()) {
-      values.rental_value = 0;
+      data.rental_value = 0;
     }
-    values.yearly_total_cost =
-      values.yearly_mortgage_total +
-      parseInt(property_tax) +
-      values.yearly_utility_cost -
-      values.rental_value * 12 +
-      values.yearly_hoa_fees;
-    values.monthly_total_cost = Math.round(
-      parseInt(values.yearly_total_cost) / 12
-    );
+    data.yearly_total_cost =
+      data.yearly_mortgage_total +
+      data.property_tax +
+      data.yearly_utility_cost -
+      data.rental_value * 12 +
+      data.yearly_hoa_fees;
+    data.monthly_total_cost = Math.round(parseInt(data.yearly_total_cost) / 12);
 
     //construct cost Table row's columns
     let cost_table_row = "<tr><td>" + dp[i] + "%</td>";
-    for (property in values) {
-      cost_table_row +=
-        "<td>$" + values[property].toLocaleString("en-US") + "</td>";
-    }
+    cost_table_row +=
+      "<td>$" + data.mortgage_total.toLocaleString("en-US") + "</td>";
+    cost_table_row +=
+      "<td>$" + data.yearly_mortgage_total.toLocaleString("en-US") + "</td>";
+    cost_table_row +=
+      "<td>$" + data.property_tax.toLocaleString("en-US") + "</td>";
+    cost_table_row +=
+      "<td>$" + data.utility_cost.toLocaleString("en-US") + "</td>";
+    cost_table_row +=
+      "<td>$" + data.yearly_utility_cost.toLocaleString("en-US") + "</td>";
+    cost_table_row +=
+      "<td>$" + data.yearly_hoa_fees.toLocaleString("en-US") + "</td>";
+    cost_table_row +=
+      "<td>$" + data.rental_value.toLocaleString("en-US") + "</td>";
+    cost_table_row +=
+      "<td>$" + data.yearly_total_cost.toLocaleString("en-US") + "</td>";
+    cost_table_row +=
+      "<td>$" + data.monthly_total_cost.toLocaleString("en-US") + "</td>";
     cost_table_row += "</tr>";
     cost_table.innerHTML += cost_table_row;
   }
@@ -95,33 +111,52 @@ var utilities = {
   internet: 50,
   hoi: 125,
 };
-var options = document.getElementById("options");
+var options = document.getElementsByClassName("utility_option");
 
 function showUtil() {
   let input = document.getElementById("util_chk");
   let table = document.getElementById("utility_table");
-  while (table.childNodes.length > 2) {
+  while (table.childNodes.length > 4) {
     table.removeChild(table.lastChild);
   }
   if (input.checked) {
-    document.getElementById("utility_options").style.display = "block";
-    for (let i = 0; i < options.childNodes.length; i++) {
-      if (options.childNodes[i].checked) {
-        let table_row = "<tr><td>" + options.childNodes[i].value + "</td>";
+    document.getElementById("utility_options").style.display = "flex";
+    for (let i = 0; i < options.length - 1; i++) {
+      if (
+        options[i].firstElementChild.checked &&
+        options[i].firstElementChild.id != "all"
+      ) {
+        let table_row = "<div>" + options[i].firstElementChild.value + "</div>";
         table_row +=
-          '<td>$<input type="number" id="val' +
-          options.childNodes[i].id +
+          '<div>$<input type="number" id="val' +
+          options[i].firstElementChild.id +
           '" onchange="calcUtil()" value="' +
-          utilities[options.childNodes[i].id] +
-          '"/></td></tr>';
+          utilities[options[i].firstElementChild.id] +
+          '"/></div>';
         table.innerHTML += table_row;
       }
     }
-    table.innerHTML += "<tr><th>Total:</th><td id='util_total'>$0</td></tr>";
+    table.innerHTML += "<div>Total:</div><div id='util_total'>$0</div>";
     calcUtil();
   } else {
     document.getElementById("utility_options").style.display = "none";
   }
+}
+
+function selectAll() {
+  if (options[options.length - 1].firstElementChild.checked) {
+    for (let i = 0; i < options.length - 1; i++) {
+      options[i].firstElementChild.checked = true;
+      document.getElementById("labelForAll").innerHTML = "Disselect All";
+    }
+  } else {
+    for (let i = 0; i < options.length - 1; i++) {
+      options[i].firstElementChild.checked = false;
+      document.getElementById("labelForAll").innerHTML = "Select All";
+    }
+  }
+
+  showUtil();
 }
 
 function calcUtil() {
@@ -144,7 +179,7 @@ function calcUtil() {
 function showRental() {
   let input = document.getElementById("add_rental");
   if (input.checked) {
-    document.getElementById("rental_options").style.display = "block";
+    document.getElementById("rental_options").style.display = "flex";
     return true;
   } else {
     document.getElementById("rental_options").style.display = "none";
@@ -155,7 +190,7 @@ function showRental() {
 function showDp() {
   let input = document.getElementById("add_dp");
   if (input.checked) {
-    document.getElementById("dp_options").style.display = "block";
+    document.getElementById("dp_options").style.display = "flex";
   } else {
     document.getElementById("dp_options").style.display = "none";
   }

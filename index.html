@@ -1,110 +1,54 @@
 <html>
   <head>
     <title>Real estate investment calculator</title>
-    <style>
-      table,
-      td,
-      th {
-        border: 1px solid black;
-      }
-      table {
-        margin-bottom: 2em;
-      }
-      td,
-      th {
-        padding: 0.25em;
-      }
-      main {
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-        justify-content: space-between;
-        margin-bottom: 2em;
-      }
-      #utility_options,
-      #rental_options,
-      #dp_options {
-        display: none;
-        margin-right: 2em;
-      }
-      #extras {
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-        margin-bottom: 2em;
-      }
-      .mmt {
-        background: lightblue;
-      }
-      .dp {
-        background-color: chocolate;
-      }
-    </style>
+    <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
+    <div id="top">
+      <div id="credit"><a href="http://benkeil.com">Ben Keil</a></div>
+      <div id="title">Mortgage Calculator</div>
+      <button id="submit" onclick="main()">Submit</button>
+    </div>
     <!-- Factors-->
     <main>
       <div id="main_factors">
-        <div>
-          <label for="property_value">Property Value:</label>
+        <div class="main_factor">
+          <label for="property_value">Property Value</label>
           <input
             type="number"
             name="property_value"
             id="property_value"
             value="500000"
+            step="10000"
           />
         </div>
-        <div>
-          <label for="property_value">Property Tax (Yearly):</label>
+        <div class="main_factor">
+          <label for="property_value">Property Tax (Yearly)</label>
           <input
             type="number"
             name="property_tax"
             id="property_tax"
             placeholder="Property Tax"
             value="3000"
+            step="100"
           />
         </div>
-        <div>
-          <label for="hoa_fees">HOA Fees (Monthly):</label>
+        <div class="main_factor">
+          <label for="hoa_fees">HOA Fees (Monthly)</label>
           <input
             type="number"
             name="hoa_fees"
             id="hoa_fees"
             placeholder="HOA Fees (Monthly)"
             value="0"
+            step="10"
           />
         </div>
       </div>
-      <div id="factor_options">
-        <div>
-          <input
-            type="checkbox"
-            name="show_utilities"
-            onclick="showUtil()"
-            id="util_chk"
-          /><label for="show_utilities">Add Utilities</label>
-        </div>
-        <div>
-          <input
-            type="checkbox"
-            name="add_rental"
-            onclick="showRental()"
-            id="add_rental"
-          /><label for="add_rental">Add Rental Income</label>
-        </div>
-        <div>
-          <input
-            type="checkbox"
-            name="add_dp"
-            onclick="showDp()"
-            id="add_dp"
-          /><label for="add_dp">Modify Down Payments</label>
-        </div>
-      </div>
-      <button onclick="main()">Submit</button>
+
       <div id="mortgage_options">
-        <div>
-          <label for="mortgage_years">Mortgage Years:</label>
+        <div class="mortgage_option">
+          <label for="mortgage_years">Mortgage Years</label>
           <input
             type="number"
             name="mortgage_years"
@@ -112,8 +56,8 @@
             value="30"
           />
         </div>
-        <div>
-          <label for="interest_rate">Interest Rate %:</label>
+        <div class="mortgage_option">
+          <label for="interest_rate">Interest Rate %</label>
           <input
             type="number"
             name="interest_rate"
@@ -121,78 +65,97 @@
             value="7"
           />
         </div>
-        <div>
-          <label for="pmi_rate">PMI %:</label>
+        <div class="mortgage_option">
+          <label for="pmi_rate">PMI %</label>
           <input type="number" name="pmi_rate" id="pmi_rate" value="1" />
         </div>
       </div>
-    </main>
-    <!--Options -->
-    <div id="extras">
+
       <!--Utility Options + Table -->
       <div id="utility_options">
         <div id="options">
-          <input
-            type="checkbox"
-            name="gas"
-            onclick="showUtil()"
-            id="gas"
-            value="Natural Gas"
-          /><label for="gas">Natural Gas</label>
-          <input
-            type="checkbox"
-            name="electricity"
-            onclick="showUtil()"
-            id="electricity"
-            value="Electricity"
-          /><label for="electricity">Electricity</label>
-          <input
-            type="checkbox"
-            name="trash"
-            onclick="showUtil()"
-            id="trash"
-            value="Waste Removal"
-          /><label for="trash">Waste Removal</label>
-          <input
-            type="checkbox"
-            name="water"
-            onclick="showUtil()"
-            id="water"
-            value="Water"
-          /><label for="water">Water</label>
-          <input
-            type="checkbox"
-            name="sewer"
-            onclick="showUtil()"
-            id="sewer"
-            value="Sewer"
-          /><label for="sewer">Sewer</label>
-          <input
-            type="checkbox"
-            name="internet"
-            onclick="showUtil()"
-            id="internet"
-            value="Internet"
-          /><label for="internet">Internet</label>
-          <input
-            type="checkbox"
-            name="hoi"
-            onclick="showUtil()"
-            id="hoi"
-            value="Home Owner's Insurance"
-          /><label for="hoi">Homeowner's Insurance</label>
+          <div class="utility_option">
+            <input
+              type="checkbox"
+              name="gas"
+              onclick="showUtil()"
+              id="gas"
+              value="Natural Gas"
+            /><label for="gas">Natural Gas</label>
+          </div>
+          <div class="utility_option">
+            <input
+              type="checkbox"
+              name="electricity"
+              onclick="showUtil()"
+              id="electricity"
+              value="Electricity"
+            /><label for="electricity">Electricity</label>
+          </div>
+          <div class="utility_option">
+            <input
+              type="checkbox"
+              name="trash"
+              onclick="showUtil()"
+              id="trash"
+              value="Waste Removal"
+            /><label for="trash">Waste Removal</label>
+          </div>
+          <div class="utility_option">
+            <input
+              type="checkbox"
+              name="water"
+              onclick="showUtil()"
+              id="water"
+              value="Water"
+            /><label for="water">Water</label>
+          </div>
+          <div class="utility_option">
+            <input
+              type="checkbox"
+              name="sewer"
+              onclick="showUtil()"
+              id="sewer"
+              value="Sewer"
+            /><label for="sewer">Sewer</label>
+          </div>
+          <div class="utility_option">
+            <input
+              type="checkbox"
+              name="internet"
+              onclick="showUtil()"
+              id="internet"
+              value="Internet"
+            /><label for="internet">Internet</label>
+          </div>
+          <div class="utility_option">
+            <input
+              type="checkbox"
+              name="hoi"
+              onclick="showUtil()"
+              id="hoi"
+              value="Home Owner's Insurance"
+            /><label for="hoi">Homeowner's Insurance</label>
+          </div>
+          <div class="utility_option">
+            <input
+              type="checkbox"
+              name="all"
+              onclick="selectAll()"
+              id="all"
+              value="Select All"
+            /><label id="labelForAll" for="all">Select All</label>
+          </div>
         </div>
-        <table id="utility_table">
-          <tr>
-            <th>Utility</th>
-            <th>Cost (Enter Number in Cell)</th>
-          </tr>
-        </table>
+        <div id="utility_table">
+          <div>Utility</div>
+          <div>Cost</div>
+        </div>
       </div>
 
       <!-- Rental Options -->
       <div id="rental_options">
-        <label for="rental_value">Rental Estimated Monthly Income:</label>
+        <label for="rental_value">Rental Income (Monthly)</label>
         <input
           type="number"
           name="rental_value"
@@ -211,35 +174,66 @@
           value="3.5, 5, 10, 20, 25"
         />
       </div>
-    </div>
-    <!--Main Table-->
-    <table id="table">
-      <tr>
-        <th class="dp">Down Payment %</th>
-        <th>Down Payment Value</th>
-        <th>Mortgage Value</th>
-        <th id="year">Year Splits</th>
-        <th>Monthly Splits</th>
-        <th>Monthly Interest</th>
-        <th>PMI Monthly</th>
-        <th class="mmt">Mortgage Monthly Total</th>
-      </tr>
-    </table>
 
-    <table id="cost_table">
-      <tr>
-        <th class="dp">Down Payment %</th>
-        <th class="mmt">Mortgage Monthly Total</th>
-        <th>Mortgage Yearly Total</th>
-        <th>Annual Property Tax</th>
-        <th>Montly Utility cost</th>
-        <th>Annual Utility cost</th>
-        <th>HOA Fees Yearly</th>
-        <th>Monthly Rental Income</th>
-        <th>Total Yearly Cost</th>
-        <th>Average Monthly Cost</th>
-      </tr>
-    </table>
+      <!--Options -->
+      <div id="factor_options">
+        <div class="factor_option">
+          <input
+            type="checkbox"
+            name="util_chk"
+            onclick="showUtil()"
+            id="util_chk"
+          /><label for="util_chk">Add Utilities</label>
+        </div>
+        <div class="factor_option">
+          <input
+            type="checkbox"
+            name="add_rental"
+            onclick="showRental()"
+            id="add_rental"
+          /><label for="add_rental">Add Rental Income</label>
+        </div>
+        <div class="factor_option">
+          <input
+            type="checkbox"
+            name="add_dp"
+            onclick="showDp()"
+            id="add_dp"
+          /><label for="add_dp">Modify Down Payments</label>
+        </div>
+      </div>
+    </main>
+
+    <!--Main Table-->
+    <div id="tables">
+      <table id="table">
+        <tr>
+          <th class="dp">Down Payment %</th>
+          <th>Down Payment Value</th>
+          <th>Mortgage Value</th>
+          <th id="year">Year Splits</th>
+          <th>Monthly Splits</th>
+          <th>Monthly Interest</th>
+          <th>PMI Monthly</th>
+          <th class="mmt">Mortgage Monthly Total</th>
+        </tr>
+      </table>
+
+      <table id="cost_table">
+        <tr>
+          <th class="dp">Down Payment %</th>
+          <th class="mmt">Mortgage Monthly Total</th>
+          <th>Mortgage Yearly Total</th>
+          <th>Annual Property Tax</th>
+          <th>Montly Utility cost</th>
+          <th>Annual Utility cost</th>
+          <th>HOA Fees Yearly</th>
+          <th>Monthly Rental Income</th>
+          <th>Total Yearly Cost</th>
+          <th>Average Monthly Cost</th>
+        </tr>
+      </table>
+    </div>
   </body>
   <script src="index.js"></script>
 </html>
