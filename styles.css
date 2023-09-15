@@ -164,7 +164,7 @@ input[type="number"]::-webkit-outer-spin-button {
 #utility_options {
   flex-direction: column;
 }
-@media (min-width: 992px) {
+@media (min-width: 768px) {
   #top {
     padding: 1vw;
   }
